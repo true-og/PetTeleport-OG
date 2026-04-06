@@ -4,10 +4,12 @@ package net.avallion.petTeleport;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
+
     private UnloadListener unloadListener;
 
     @Override
     public void onEnable() {
+
         saveDefaultConfig();
         unloadListener = new UnloadListener(this);
         getServer().getPluginManager().registerEvents(unloadListener, this);
@@ -17,6 +19,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
         getLogger().info("PetTeleport has been disabled.");
+
     }
+
 }
