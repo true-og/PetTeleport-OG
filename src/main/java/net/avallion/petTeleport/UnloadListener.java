@@ -1,16 +1,15 @@
 package net.avallion.petTeleport;
 
+import java.util.List;
+
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Sittable;
 import org.bukkit.entity.Tameable;
-import org.bukkit.entity.Player;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
-
-import java.util.List;
 
 public class UnloadListener implements Listener {
 
@@ -41,7 +40,6 @@ public class UnloadListener implements Listener {
         final boolean logPetTeleports = plugin.getConfig().getBoolean("logPetTeleports");
         final List<String> worldBlacklist = plugin.getConfig().getStringList("worldBlacklist");
         final boolean isBlacklist = plugin.getConfig().getBoolean("isBlacklist");
-
         for (Entity ent : entities) {
 
             if (ent instanceof Sittable && ent instanceof Tameable) {
@@ -60,6 +58,13 @@ public class UnloadListener implements Listener {
                     }
 
                     final Player ply = (Player) tame.getOwner();
+
+                    if (plugin.isWorldGuardPresent() && !WorldGuardHandler.isTeleportAllowed(ply.getLocation())) {
+
+                        continue;
+
+                    }
+
                     ent.teleport(ply);
                     ent.setPortalCooldown(300);
 

@@ -4,10 +4,10 @@ logPetTeleports: true
 # a list of worlds that pets may or may not teleport to
 # see isBlacklist option below
 worldList:
-  - lobby
-  - hub
-  - some_other_world
+  - world
+  - world_nether
+  - world_the_end
 
 # whether the list of worlds will act as a blacklist - the worlds in the list are disallowed
 # or a whitelist, only the worlds in the list are allowed
-isBlacklist: true
+isBlacklist: false

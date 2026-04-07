@@ -28,7 +28,8 @@ out/
 
 # Gradle files
 .gradle/
-build
+build/
+bin/
 
 # Eclipse files
 .classpath

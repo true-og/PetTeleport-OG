@@ -1,7 +1,7 @@
-name: PetTeleport
+name: PetTeleport-OG
 version: ${version}
 api-version: ${apiVersion}
 description: Pets teleport with you!
-authors: [Raus, NotAShelf]
-prefix: PetTeleport
+authors: [Raus, NotAShelf, NotAlexNoyle]
 main: net.avallion.petTeleport.Main
+softdepend: [WorldGuard]

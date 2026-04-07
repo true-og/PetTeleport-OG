@@ -29,6 +29,7 @@ repositories {
     mavenCentral() // Import the Maven Central Maven Repository.
     gradlePluginPortal() // Import the Gradle Plugin Portal Maven Repository.
     maven { url = uri("https://repo.purpurmc.org/snapshots") } // Import the PurpurMC Maven Repository.
+    maven { url = uri("https://maven.enginehub.org/repo/") } // Import the EngineHub Maven Repository (WorldGuard).
     maven { url = uri("file://${System.getProperty("user.home")}/.m2/repository") }
     System.getProperty("SELF_MAVEN_LOCAL_REPO")?.let { // TrueOG Bootstrap mavenLocal().
         val dir = file(it)
@@ -43,7 +44,10 @@ repositories {
 }
 
 /* ---------------------- Java project deps ---------------------------- */
-dependencies { compileOnly("org.purpurmc.purpur:purpur-api:1.19.4-R0.1-SNAPSHOT") }
+dependencies {
+    compileOnly("org.purpurmc.purpur:purpur-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
+}
 
 tasks.named<ProcessResources>("processResources") {
     val props = mapOf("version" to version, "apiVersion" to apiVersion)
