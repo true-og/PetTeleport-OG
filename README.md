@@ -41,22 +41,26 @@ None!
 
 ### Configuration
 
+Each option is documented inline in [`config.yml`](src/main/resources/config.yml), including what it does and the shipped default value.
+
 ```yaml
+# Whether to log pet teleports to the server console.
+# Default: true
 logPetTeleports: true
 
+# Worlds that pets may or may not teleport to, depending on isBlacklist below.
+# Default: [world, world_nether, world_the_end]
 worldList:
   - world
   - world_nether
   - world_the_end
 
+# Whether worldList acts as a blacklist.
+# false = whitelist mode, so pets may only teleport to worlds in worldList.
+# true = blacklist mode, so pets may not teleport to worlds in worldList.
+# Default: false
 isBlacklist: false
 ```
-
-| Option          | Description                                                                                                           | Type      |
-| --------------- | --------------------------------------------------------------------------------------------------------------------- | --------- |
-| logPetTeleports | Whether to log pet teleports in the server console                                                                    | `boolean` |
-| worldList       | A list of worlds that pets may or may not teleport to                                                                 | `list`    |
-| isBlacklist     | Whether the `worldList` option will act as a blacklist. <br>If false, pets may only teleport to the world in the list | `bool`    |
 
 The shipped defaults are a whitelist of the three vanilla worlds (`world`, `world_nether`, `world_the_end`), rather than the
 sample blacklist (`lobby`, `hub`, `some_other_world`) used by upstream.
@@ -72,7 +76,8 @@ you can set per region to gate pet teleports into that region:
 ```
 
 The flag defaults to `allow`, so regions without it explicitly set behave exactly as they did before. When set to
-`deny`, pets will not be teleported to a player standing inside the region.
+`deny`, pets will not be teleported to a player standing inside the region. This only applies when WorldGuard is
+installed; otherwise PetTeleport-OG continues without region checks.
 
 ## License
 

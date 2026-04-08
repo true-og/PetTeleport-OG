@@ -1,7 +1,5 @@
 package net.avallion.petTeleport;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Location;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -23,32 +21,57 @@ public final class WorldGuardHandler {
 
     }
 
-    public static void registerFlag(Logger logger) {
+    // Registers the WorldGuard Flag "pet-teleport". Throws a custom exception.
+    public static StateFlag registerPetTeleportWorldGuardFlag(StateFlag petTeleportFlags)
+            throws FlagRegistrationException
+    {
 
+        // Add the WorldGuard flag for an area where PetTeleport is active.
         final FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
         try {
 
+            // Create a flag with the name "pet-teleport", defaulting to true.
             final StateFlag flag = new StateFlag(FLAG_NAME, true);
+
+            // Register the new flag with WorldGuard.
             registry.register(flag);
-            petTeleportFlag = flag;
-            logger.info("Registered WorldGuard flag: " + FLAG_NAME);
 
-        } catch (FlagConflictException e) {
+            // Only return the flag if there was no error.
+            return flag;
 
+        }
+        // If there was a WorldGuard Flag conflict, do this...
+        catch (FlagConflictException error) {
+
+            // Pulls the WorldGuard Flag from the registry that some other plugin registered
+            // by the same name.
+            // Developer Note: You CAN use the existing flag, but this may cause conflicts -
+            // be sure to check type.
             final Flag<?> existing = registry.get(FLAG_NAME);
+            // If the existing WorldGuard Flag is a StateFlag, do this...
             if (existing instanceof StateFlag) {
 
-                petTeleportFlag = (StateFlag) existing;
-                logger.info("Reusing existing WorldGuard flag: " + FLAG_NAME);
+                // Return the existing WorldGuard Flag.
+                return (StateFlag) existing;
 
-            } else {
+            }
+            // If the existing WorldGuard Flag is not a StateFlag, do this...
+            else {
 
-                logger.warning("WorldGuard flag '" + FLAG_NAME
-                        + "' exists but is not a StateFlag; pet teleports will not be region-gated.");
+                // Throw a custom exception that displays details about the issues with flag
+                // registration in the server console.
+                throw new FlagRegistrationException("Failed to register " + FLAG_NAME + " flag due to conflict.",
+                        error);
 
             }
 
         }
+
+    }
+
+    public static void setFlag(StateFlag flag) {
+
+        petTeleportFlag = flag;
 
     }
 
@@ -62,6 +85,7 @@ public final class WorldGuardHandler {
 
         final RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         final RegionQuery query = container.createQuery();
+
         return query.testState(BukkitAdapter.adapt(location), null, petTeleportFlag);
 
     }

@@ -46,7 +46,12 @@ repositories {
 /* ---------------------- Java project deps ---------------------------- */
 dependencies {
     compileOnly("org.purpurmc.purpur:purpur-api:1.19.4-R0.1-SNAPSHOT")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
+    compileOnly(
+        "com.sk89q.worldguard:worldguard-bukkit:7.0.8"
+    ) { // Import WorldGuard but without its bundled WorldEdit.
+        exclude(group = "com.sk89q.worldedit")
+    }
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT") // Import WorldEdit API.
 }
 
 tasks.named<ProcessResources>("processResources") {

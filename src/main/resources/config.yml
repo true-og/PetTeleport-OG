@@ -1,13 +1,16 @@
-# if this option is true, then all pet teleports will be logged in your server console
+# Whether to log pet teleports to the server console.
+# Default: true
 logPetTeleports: true
 
-# a list of worlds that pets may or may not teleport to
-# see isBlacklist option below
+# Worlds that pets may or may not teleport to, depending on isBlacklist below.
+# Default: [world, world_nether, world_the_end]
 worldList:
   - world
   - world_nether
   - world_the_end
 
-# whether the list of worlds will act as a blacklist - the worlds in the list are disallowed
-# or a whitelist, only the worlds in the list are allowed
+# Whether worldList acts as a blacklist.
+# false = whitelist mode, so pets may only teleport to worlds in worldList.
+# true = blacklist mode, so pets may not teleport to worlds in worldList.
+# Default: false
 isBlacklist: false
