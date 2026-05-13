@@ -59,6 +59,12 @@ public class UnloadListener implements Listener {
 
                     final Player ply = (Player) tame.getOwner();
 
+                    if (ProtectedActivity.isActive(ply)) {
+
+                        continue;
+
+                    }
+
                     if (plugin.isWorldGuardPresent() && !WorldGuardHandler.isTeleportAllowed(ply.getLocation())) {
 
                         continue;
