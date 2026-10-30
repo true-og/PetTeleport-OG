@@ -6,7 +6,7 @@
 
 <div align="center">
   <code><img title="License" href="LICENSE" src="https://img.shields.io/github/license/true-og/PetTeleport-OG?style=flat-square"></code>
-  <code><img title="Issues" href="https://github.com/true-og/PetTeleport-OG/issues" src="https://img.shields.io/github/issues/true-og/PetTeleport-OG?style=flat-square"></code>
+  <code><img title="Issues" href="https://git.trueog.net/trueog/PetTeleport-OG/issues" src="https://img.shields.io/github/issues/true-og/PetTeleport-OG?style=flat-square"></code>
 </div>
 
 Ever teleported somewhere in Minecraft only for your pets to not follow you? I have! The problem is that the server instantly unloads unoccupied chunks, often with
