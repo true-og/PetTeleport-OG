@@ -1,45 +1,35 @@
-<h1 align="center">🐾 PetTeleport-OG</h1>
+# PetTeleport-OG
+
+PetTeleport-OG keeps pets from being left behind. The server unloads chunks that no player is in, so a pet left standing in one is stranded when its owner teleports away. PetTeleport-OG teleports each standing tamed pet to its owner when the chunk the pet is in unloads, or when a player leaves the world the pet is in.
+
+It is the [TrueOG Network](https://trueog.net) fork of [NotAShelf/pet-teleport](https://github.com/NotAShelf/pet-teleport), which is itself a fork of Chailotl's original pet-teleport (that repository is no longer online).
 
 <div align="center">
-  <img src="https://i.imgur.com/Bwili3Z.png">
+  <img src="https://i.imgur.com/nbE7F5i.gif" alt="PetTeleport-OG in action">
 </div>
 
-<div align="center">
-  <code><img title="License" href="LICENSE" src="https://img.shields.io/github/license/true-og/PetTeleport-OG?style=flat-square"></code>
-  <code><img title="Issues" href="https://git.trueog.net/trueog/PetTeleport-OG/issues" src="https://img.shields.io/github/issues/true-og/PetTeleport-OG?style=flat-square"></code>
-</div>
+## Target
 
-Ever teleported somewhere in Minecraft only for your pets to not follow you? I have! The problem is that the server instantly unloads unoccupied chunks, often with
-your pet in stow! This plugin ensures that all standing pets teleport to you if they ever end up in an unloaded chunk. Handy!
+[Purpur](https://git.trueog.net/trueog/Purpur) 1.19.4, Java 17.
 
-`PetTeleport-OG` is the [TrueOG Network](https://trueog.net) maintained fork of [NotAShelf/pet-teleport](https://github.com/NotAShelf/pet-teleport), which is itself a fork of [Chailotl/pet-teleport](https://github.com/Chailotl/pet-teleport).
+## Authors
 
-## Differences from Upstream
+Raus, NotAShelf, NotAlexNoyle.
 
-- Built for Purpur 1.19.4.
-- Builds with TrueOG Network live config file.
-- Adds WorldGuard integration via the `pet-teleport` region flag.
+## Differences from upstream
+
+- Targets Purpur 1.19.4 and builds with Gradle instead of Maven.
+- Ships the TrueOG Network live configuration.
+- Adds a WorldGuard `pet-teleport` region flag.
+- Does not teleport pets to a player who is in a [Duels-OG](https://git.trueog.net/trueog/Duels-OG) match or a [Spleef-OG](https://git.trueog.net/trueog/Spleef-OG) game.
 
 ## Usage
 
-<div align="center">
-  <a><img src="https://i.imgur.com/nbE7F5i.gif"></a>
-  <br/>
-</div>
-<br>
+Tame a pet and leave it standing; sitting pets stay where they are. The plugin works automatically and has no commands or permissions.
 
-Tame your desired pets and the plugin will automatically work when you teleport. There is practically no manual input from the player required.
-Other than, well, moving around with your pets.
+Only pets that can sit (wolves, cats, and parrots) are teleported, and only while their owner is online.
 
-### Commands
-
-None!
-
-### Permissions
-
-None!
-
-### Configuration
+## Configuration
 
 Each option is documented inline in [`config.yml`](src/main/resources/config.yml), including what it does and the shipped default value.
 
@@ -65,9 +55,9 @@ isBlacklist: false
 The shipped defaults are a whitelist of the three vanilla worlds (`world`, `world_nether`, `world_the_end`), rather than the
 sample blacklist (`lobby`, `hub`, `some_other_world`) used by upstream.
 
-### WorldGuard Integration
+## WorldGuard integration
 
-If [WorldGuard](https://enginehub.org/worldguard) is installed, PetTeleport-OG registers a `pet-teleport` state flag
+If [WorldGuard](https://git.trueog.net/trueog/WorldGuard) is installed, PetTeleport-OG registers a `pet-teleport` state flag
 you can set per region to gate pet teleports into that region:
 
 ```
@@ -78,6 +68,18 @@ you can set per region to gate pet teleports into that region:
 The flag defaults to `allow`, so regions without it explicitly set behave exactly as they did before. When set to
 `deny`, pets will not be teleported to a player standing inside the region. This only applies when WorldGuard is
 installed; otherwise PetTeleport-OG continues without region checks.
+
+## Duels-OG and Spleef-OG
+
+Both are optional. While a player is in a Duels-OG match or a Spleef-OG game, their pets are not teleported to them, so pets are never pulled into an arena.
+
+## Building
+
+```sh
+./gradlew build
+```
+
+The build uses a GraalVM JDK 17 toolchain. The plugin jar is written to `build/libs/PetTeleport-OG-<version>.jar`.
 
 ## License
 
