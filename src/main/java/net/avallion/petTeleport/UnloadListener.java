@@ -38,7 +38,7 @@ public class UnloadListener implements Listener {
     private void handleEntities(Entity[] entities) {
 
         final boolean logPetTeleports = plugin.getConfig().getBoolean("logPetTeleports");
-        final List<String> worldBlacklist = plugin.getConfig().getStringList("worldBlacklist");
+        final List<String> worldList = plugin.getConfig().getStringList("worldList");
         final boolean isBlacklist = plugin.getConfig().getBoolean("isBlacklist");
         for (Entity ent : entities) {
 
@@ -48,16 +48,16 @@ public class UnloadListener implements Listener {
                 final Tameable tame = (Tameable) ent;
                 if (!sit.isSitting() && tame.getOwner() instanceof Player) {
 
-                    final String currentWorld = ent.getWorld().getName();
-                    if ((isBlacklist && worldBlacklist.contains(currentWorld))
-                            || (!isBlacklist && !worldBlacklist.contains(currentWorld)))
-                    {
+                    final Player ply = (Player) tame.getOwner();
+
+                    // worldList names the worlds pets may (whitelist) or may not (blacklist) be
+                    // teleported to. The destination is the owner's world.
+                    final boolean destinationListed = worldList.contains(ply.getWorld().getName());
+                    if (isBlacklist == destinationListed) {
 
                         continue;
 
                     }
-
-                    final Player ply = (Player) tame.getOwner();
 
                     if (ProtectedActivity.isActive(ply)) {
 
